@@ -1,80 +1,145 @@
 <template>
   <div id="app">
-    <div class="main-wrapper">
-      <div id="page-0" class="wrapper">
-        page-0
+    <div class="wrapper-link">
+      <Header/>
+    </div>
+    <div style="transform: translateY(0px)" class="main-wrapper">
+      <div class="wrapper">
+        <Skill/>
       </div>
-
-      <div id="page-1" class="wrapper color">
-        page-1
+      <div class="wrapper">
+        <Autobiography/>
       </div>
-
-      <div id="page-2" class="wrapper color-two">
-        page-2
+      <div class="wrapper">
+        <MyWork/>
+      </div>
+      <div class="wrapper">
+        <ScreenFirst/>
       </div>
     </div>
-    <!--    <div id="nav">-->
-    <!--      <router-link to="/">Home</router-link> |-->
-    <!--      <router-link to="/about">About</router-link>-->
-    <!--    </div>-->
-    <!--    <router-view/>-->
+    <div class="wrapper-counter">
+      <div class="wrapper-counter__item-counter">
+        0{{ pageId }}
+      </div>
+      <div class="wrapper-counter__item-amount">08</div>
+    </div>
   </div>
 </template>
 
 <script>
+import Header from "./components/Header";
+import ScreenFirst from "./components/ScreenFirst";
+import Autobiography from "./components/Autobiography";
+import MyWork from "./components/MyWork";
+import Skill from "./components/Wrapper";
 
 export default {
   name: 'App',
   data() {
     return {
-      pageId: 0
+      pageId: 1
     }
   },
+  components: {
+    Header,
+    ScreenFirst,
+    Autobiography,
+    MyWork,
+    Skill
+  },
+
   beforeCreate() {
-    // let lastScrollTop = 0;
-
     document.addEventListener('wheel', (e) => {
-      const wrapper = document.querySelector('.main-wrapper')
-      const height = document.documentElement.clientHeight
+      const lengthList = document.querySelectorAll('.wrapper').length;
+      const wrapper = document.querySelector('.main-wrapper');
+      const height = document.documentElement.clientHeight;
+      const width = document.documentElement.clientWidth;
 
-      // определяю куда идет движение скрола
-      if (e.wheelDeltaY > 0) {
-        // wrapper.style.webkitTransform += "translateY(" + height + "px)";
-        // wrapper.style.MozTransform += "translateY(" + height + "px)";
-        // wrapper.style.msTransform += "translateY(" + height + "px)";
-        // wrapper.style.OTransform += "translateY(" + height + "px)";
-        wrapper.style.transform += "translateY(" + height + "px)";
-      } else if (e.wheelDeltaY < 0) {
-        // wrapper.style.webkitTransform += "translateY(-" + height + "px)";
-        // wrapper.style.MozTransform += "translateY(-" + height + "px)";
-        // wrapper.style.msTransform += "translateY(-" + height + "px)";
-        // wrapper.style.OTransform += "translateY(-" + height + "px)";
-        wrapper.style.transform += "translateY(-" + height + "px)";
+      if (width <= 1200) {
+        return false;
       }
-      // lastScrollTop = top;
+
+      if (e.wheelDeltaY > 0) {
+        let firstItem = wrapper.style.transform.indexOf('(');
+        let newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) + height;
+
+        if (newValue > 0) {
+
+          //Уперся вверх
+          return false;
+        }
+
+        this.pageId--
+        wrapper.style.transform = "translateY(" + newValue + "px)";
+      } else if (e.wheelDeltaY < 0) {
+
+        let firstItem = wrapper.style.transform.indexOf('(');
+        let newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) - height;
+
+        if (lengthList * height <= newValue * -1) {
+          // Уперся вниз
+          return false;
+        }
+        this.pageId++
+        wrapper.style.transform = "translateY(" + newValue + "px)";
+      }
     })
   }
 }
 </script>
 
 <style lang="less">
-@vp_mobile:     500px;
-.mobile(@rules) { @media screen and (max-width:@vp_mobile){ @rules(); } };
+@vp_mobile: 500px;
+.mobile(@rules) {
+  @media screen and (max-width: @vp_mobile) { @rules();
+  }
+}
+
+@vp_tablet: 760px;
+.tablet(@rules) {
+  @media screen and (max-width: @vp_tablet) { @rules();
+  }
+}
+
+@layout-s: 1200px;
+.layout-s(@rules) {
+  @media screen and (max-width: @layout-s) { @rules();
+  }
+}
 
 * {
   margin: 0;
+  word-break: keep-all;
   padding: 0;
+  font-family: Merriweather_Sans, sans-serif;
+}
+
+@font-face {
+  font-family: Merriweather_Sans; /* Гарнитура шрифта */
+  src: url(../src/font/Merriweather_Sans/MerriweatherSans-VariableFont_wght.ttf); /* Путь к файлу со шрифтом */
+}
+
+.wrapper-link {
+  position: fixed;
+  left: 0;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  justify-content: center;
+  display: flex;
+  background: #0a0a0a;
+  width: 135px;
+
+  .tablet ({
+    display: none;
+  });
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   overflow: hidden;
 
-  .mobile ({
+  .layout-s ({
     height: 100%;
     overflow: auto;
   });
@@ -82,30 +147,30 @@ export default {
 
 .main-wrapper {
   height: 100vh;
-  transition: 2s ease-in-out;
-  //overflow: hidden;
-  //
-  //.mobile ({
-  //    height: 100%;
-  //    overflow: auto;
-  //});
+  transition: all 2s;
 
   .wrapper {
-    background-color: #000;
     height: 100vh;
     width: 100%;
-    color: red;
-    font-size: 48px;
-
-    &.color {
-      background-color: red;
-    }
-
-    &.color-two {
-      background-color: aqua;
-    }
   }
 }
 
+.wrapper-counter {
+  pointer-events: none;
+  display: flex;
+  position: absolute;
+  top: 48px;
+  right: 40px;
+  z-index: 100;
+  color: #ccc;
+  font-size: 26px;
+
+  .wrapper-counter__item-amount {
+    margin-left: 36px;
+    padding-left: 8px;
+    border-left: 1px solid #a4a4a4;
+    color: #a4a4a4;
+  }
+}
 
 </style>
