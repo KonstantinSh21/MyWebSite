@@ -5,16 +5,20 @@
     </div>
     <div style="transform: translateY(0px)" class="main-wrapper">
       <div class="wrapper">
-        <Skill/>
+        <Slider />
+<!--        <Skill/>-->
+      </div>
+<!--      <div class="wrapper">-->
+<!--        <SkillCss/>-->
+<!--      </div>-->
+      <div class="wrapper">
+        <ScreenFirst/>
       </div>
       <div class="wrapper">
         <Autobiography/>
       </div>
       <div class="wrapper">
         <MyWork/>
-      </div>
-      <div class="wrapper">
-        <ScreenFirst/>
       </div>
     </div>
     <div class="wrapper-counter">
@@ -31,7 +35,9 @@ import Header from "./components/Header";
 import ScreenFirst from "./components/ScreenFirst";
 import Autobiography from "./components/Autobiography";
 import MyWork from "./components/MyWork";
-import Skill from "./components/Wrapper";
+// import Skill from "./components/Wrapper";
+// import SkillCss from "./components/SkillCss";
+import Slider from "./components/Slider";
 
 export default {
   name: 'App',
@@ -45,7 +51,9 @@ export default {
     ScreenFirst,
     Autobiography,
     MyWork,
-    Skill
+    // SkillCss,
+    // Skill,
+    Slider
   },
 
   beforeCreate() {

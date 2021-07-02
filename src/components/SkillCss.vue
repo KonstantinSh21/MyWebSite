@@ -1,7 +1,9 @@
 <template>
-  <div class="wrapper-html">
+  <div class="main-wrapper">
+  <div class="wrapper-css">
     <div class="wrapper-skill__container">
       <div class="wrapper-skill__container-text">
+        <div class="wrapper-skill__container-text-line"></div>
         <a
             class="wrapper-skill__container-text-header"
             href="https://ru.wikipedia.org/wiki/HTML"
@@ -11,18 +13,18 @@
         <div class="wrapper-skill__container-decs">
           HyperText Markup Language
         </div>
-        <div class="wrapper-skill__container-decs--small">
-          My skill
-        </div>
       </div>
     </div>
-    <div class="wrapper-skill__container-img"></div>
+    <div class="wrapper-skill__container-img">
+
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "SkillHtml"
+  name: "SkillCss"
 }
 </script>
 
@@ -45,13 +47,23 @@ export default {
   }
 }
 
-.wrapper-html {
+.main-wrapper {
   position: relative;
+  height: 100%;
+  margin-left: 135px;
+
+  .tablet({
+    margin-left: 0;
+  });
+}
+
+.wrapper-css {
   height: 100%;
   width: 100%;
   display: flex;
-  background-image: url(https://images.unsplash.com/photo-1415889455891-23bbf19ee5c7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80);
+  flex-direction: row-reverse;
   background-size: cover;
+  background-image: url(https://images.unsplash.com/photo-1519933045055-2e2d61a64bcf?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);
 
   .wrapper-skill__container {
     flex: 1 1 40%;
@@ -60,9 +72,8 @@ export default {
     align-items: center;
     padding: 0 32px;
     margin-bottom: -128px;
+    opacity: 0.7;
     height: 100%;
-    opacity: 0.8;
-    font-weight: 700;
 
     .wrapper-skill__container-text {
 
@@ -96,20 +107,14 @@ export default {
       .wrapper-skill__container-decs {
         font-size: 24px;
         line-height: 24px;
-        color: rgba(0, 0, 0, .7);
-        padding-top: 36px;
-      }
-
-      .wrapper-skill__container-decs--small {
-        font-size: 16px;
-        line-height: 24px;
-        margin-top: 8px;
         color: rgba(0, 0, 0, .5);
+        padding-top: 36px;
       }
     }
   }
 
   .wrapper-skill__container-img {
+    position: relative;
     flex: 1 1 60%;
   }
 }
