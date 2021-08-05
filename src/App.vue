@@ -5,20 +5,18 @@
     </div>
     <div style="transform: translateY(0px)" class="main-wrapper">
       <div class="wrapper">
-        <Slider />
-<!--        <Skill/>-->
-      </div>
-<!--      <div class="wrapper">-->
-<!--        <SkillCss/>-->
-<!--      </div>-->
-      <div class="wrapper">
-        <ScreenFirst/>
+        <ScreenFirst
+            @toggleScreen="toggleNextScreen"
+        />
       </div>
       <div class="wrapper">
         <Autobiography/>
       </div>
       <div class="wrapper">
         <MyWork/>
+      </div>
+      <div class="wrapper">
+        <Slider/>
       </div>
     </div>
     <div class="wrapper-counter">
@@ -51,16 +49,41 @@ export default {
     ScreenFirst,
     Autobiography,
     MyWork,
-    // SkillCss,
-    // Skill,
     Slider
   },
 
-  beforeCreate() {
-    document.addEventListener('wheel', (e) => {
+  methods: {
+    toggleNextScreen(pos) {
       const lengthList = document.querySelectorAll('.wrapper').length;
       const wrapper = document.querySelector('.main-wrapper');
       const height = document.documentElement.clientHeight;
+      let newValue = 0;
+      let firstItem = wrapper.style.transform.indexOf('(');
+
+      if (pos === 'up') {
+        newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) - height;
+
+        if (lengthList * height <= newValue * -1) {
+          // Уперся вниз
+          return false;
+        }
+        this.pageId++
+      } else if (pos === 'down') {
+        newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) + height;
+
+        if (newValue > 0) {
+          //Уперся вверх
+          return false;
+        }
+        this.pageId--
+      }
+
+      wrapper.style.transform = "translateY(" + newValue + "px)";
+    },
+  },
+
+  beforeCreate: function () {
+    document.addEventListener('wheel', (e) => {
       const width = document.documentElement.clientWidth;
 
       if (width <= 1200) {
@@ -68,28 +91,9 @@ export default {
       }
 
       if (e.wheelDeltaY > 0) {
-        let firstItem = wrapper.style.transform.indexOf('(');
-        let newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) + height;
-
-        if (newValue > 0) {
-
-          //Уперся вверх
-          return false;
-        }
-
-        this.pageId--
-        wrapper.style.transform = "translateY(" + newValue + "px)";
+        this.toggleNextScreen('down');
       } else if (e.wheelDeltaY < 0) {
-
-        let firstItem = wrapper.style.transform.indexOf('(');
-        let newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) - height;
-
-        if (lengthList * height <= newValue * -1) {
-          // Уперся вниз
-          return false;
-        }
-        this.pageId++
-        wrapper.style.transform = "translateY(" + newValue + "px)";
+        this.toggleNextScreen('up');
       }
     })
   }

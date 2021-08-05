@@ -6,13 +6,29 @@
           Frontend <span>Developer</span> Shikhov Konstantin
         </h1>
       </div>
+      <div class="body-wrapper__footer">
+        <div
+            @click="toggleScreen"
+            class="body-wrapper__footer-arrow"
+        >
+          <font-awesome-icon :icon="['fa', 'angle-down']"/>
+        </div>
+        <div class="body-wrapper__footer-text">
+          Spin smoothly or push
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ScreenFirst"
+  name: "ScreenFirst",
+  methods: {
+    toggleScreen() {
+      this.$emit('toggleScreen', 'up')
+    }
+  }
 }
 </script>
 
@@ -45,6 +61,55 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .body-wrapper__footer {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateY(-50%);
+    color: #cccccc;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: center;
+
+    .tablet({
+      display: none;
+    });
+
+    .body-wrapper__footer-arrow {
+      margin: 0 auto;
+
+      svg {
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        animation: move 2s infinite;
+      }
+
+      @keyframes move {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+    }
+
+
+    .body-wrapper__footer-text {
+      text-align: center;
+      width: 100%;
+      margin-top: 8px;
+      font-weight: 300;
+      font-size: 18px;
+    }
+
   }
 
   .body-wrapper__text {

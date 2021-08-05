@@ -2,47 +2,42 @@
   <div class="wrapper-slider">
     <div class="container">
       <div class="sidebar">
-<!--        <div style="background: linear-gradient(90deg, #11DEE9 -26%, #017E8B 145%);">-->
-<!--          <h1>Snow in the desert</h1>-->
-<!--          <p>Love, death & robots</p>-->
-<!--        </div>-->
-        <div style="background: linear-gradient(90deg, #b81f1f -1%, #f66e6e 124%);">
+        <div style="background: linear-gradient(252deg, rgb(35 27 62) -1%, rgb(246, 110, 110) 124%);">
           <h1>JavaScript</h1>
-          <p></p>
+          <p>Vue</p>
         </div>
-        <div style="background: linear-gradient(90deg, #0cf6ff -1%, #000dfd 124%);">
+        <div style="background: linear-gradient(203deg, rgb(77 177 52) -1%, rgb(0, 13, 253) 160%);}">
           <h1>CSS</h1>
-          <p></p>
+          <p>Less, SCSS</p>
         </div>
-        <div style="background: linear-gradient(90deg, #ba3000 -8%, #ff9876 138%);">
+        <div style="background: linear-gradient(270deg, rgb(218 207 199) -8%, rgb(255, 152, 118) 138%);">
           <h1>Html</h1>
-          <p>Love, death & robots</p>
         </div>
       </div>
       <div class="main-slide">
         <div
             style="
-            background-image: url('https://abuzov.ru/wp-content/uploads/2018/11/html-1080x500.png');
+            background-image: url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
           "
         ></div>
         <div
             style="
-            background-image: url('https://it-black.ru/wp-content/uploads/2019/04/nasledovanie_css.png');
+            background-image: url('https://images.unsplash.com/photo-1627615646894-ccfa494592be?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1433&q=80');
           "
         ></div>
         <div
             style="
-            background-color: red;
-            /*background-image: url('https://images.unsplash.com/photo-1523633589114-88eaf4b4f1a8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');*/
+
+            background-image: url('https://images.unsplash.com/photo-1627601759846-b78eef021765?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
           "
         ></div>
       </div>
       <div class="controls">
         <button @click="changeSlide('down')" class="down-button">
-          <i class="fas fa-arrow-down"></i>
+          <font-awesome-icon :icon="['fa', 'arrow-down']"/>
         </button>
         <button @click="changeSlide('up')" class="up-button">
-          <i class="fas fa-arrow-up"></i>
+          <font-awesome-icon :icon="['fa', 'arrow-up']"/>
         </button>
       </div>
     </div>
