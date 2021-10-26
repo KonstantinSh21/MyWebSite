@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="wrapper-link">
-      <Header/>
+      <Header @scrollUp="scrollUp"/>
     </div>
     <div style="transform: translateY(0px)" class="main-wrapper">
       <div class="wrapper">
@@ -23,7 +23,7 @@
       <div class="wrapper-counter__item-counter">
         0{{ pageId }}
       </div>
-      <div class="wrapper-counter__item-amount">08</div>
+      <div class="wrapper-counter__item-amount">0{{ amountPages }}</div>
     </div>
   </div>
 </template>
@@ -33,15 +33,15 @@ import Header from "./components/Header";
 import ScreenFirst from "./components/ScreenFirst";
 import Autobiography from "./components/Autobiography";
 import MyWork from "./components/MyWork";
-// import Skill from "./components/Wrapper";
-// import SkillCss from "./components/SkillCss";
 import Slider from "./components/Slider";
 
 export default {
   name: 'App',
   data() {
     return {
-      pageId: 1
+      pageId: 1,
+      amountPages: null,
+      maxEvent: 0
     }
   },
   components: {
@@ -51,8 +51,13 @@ export default {
     MyWork,
     Slider
   },
-
   methods: {
+
+    scrollUp() {
+      for (let i = 0; i <= this.pageId; i++) {
+        this.toggleNextScreen('down');
+      }
+    },
     toggleNextScreen(pos) {
       const lengthList = document.querySelectorAll('.wrapper').length;
       const wrapper = document.querySelector('.main-wrapper');
@@ -81,19 +86,29 @@ export default {
       wrapper.style.transform = "translateY(" + newValue + "px)";
     },
   },
-
-  beforeCreate: function () {
+  mounted() {
+    this.amountPages = document.querySelectorAll('.wrapper').length;
+    document.addEventListener('keyup', (e) => {
+      if (e.code === "ArrowDown") {
+        this.toggleNextScreen('up');
+      }
+      if (e.code === "ArrowUp") {
+        this.toggleNextScreen('down');
+      }
+    });
     document.addEventListener('wheel', (e) => {
       const width = document.documentElement.clientWidth;
-
       if (width <= 1200) {
         return false;
       }
-
-      if (e.wheelDeltaY > 0) {
-        this.toggleNextScreen('down');
-      } else if (e.wheelDeltaY < 0) {
-        this.toggleNextScreen('up');
+      this.maxEvent++
+      if (this.maxEvent > 15) {
+        if (e.wheelDeltaY > 0) {
+          this.toggleNextScreen('down');
+        } else if (e.wheelDeltaY < 0) {
+          this.toggleNextScreen('up');
+        }
+        this.maxEvent = 0;
       }
     })
   }
@@ -176,6 +191,10 @@ export default {
   z-index: 100;
   color: #ccc;
   font-size: 26px;
+
+  .tablet ({
+    display: none;
+  });
 
   .wrapper-counter__item-amount {
     margin-left: 36px;

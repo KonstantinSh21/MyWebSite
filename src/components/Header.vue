@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-header">
-    <img src="../assets/logo.png">
+    <img src="../assets/logo.png" @click="scrollUp">
     <div class="spacer"></div>
     <div class="wrapper-header-text">
       <a href="https://github.com/KonstantinSh21">
@@ -19,7 +19,12 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  methods:{
+    scrollUp(){
+      this.$emit("scrollUp")
+    }
+  }
 }
 </script>
 

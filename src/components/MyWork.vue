@@ -136,7 +136,6 @@ export default {
     }
 
     .wrapper-my-work__text {
-      //overflow: hidden;
       text-align: left;
       position: absolute;
       left: 0;
@@ -147,7 +146,6 @@ export default {
       z-index: 1;
 
       .wrapper-my-work__text-header {
-        margin-bottom: -35px;
         word-break: keep-all;
         font-weight: 700;
         font-size: 3.35vw;
@@ -155,14 +153,6 @@ export default {
         transition: all 1s ease-out;
         position: absolute;
         bottom: 100px;
-        //
-        //.tablet({
-        //  margin-bottom: -100px;
-        //});
-        //
-        //.mobile({
-        //  margin-bottom: -150px;
-        //});
       }
 
       .wrapper-my-work__text-disc {

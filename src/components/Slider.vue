@@ -12,6 +12,7 @@
         </div>
         <div style="background: linear-gradient(270deg, rgb(218 207 199) -8%, rgb(255, 152, 118) 138%);">
           <h1>Html</h1>
+          <p>Pug</p>
         </div>
       </div>
       <div class="main-slide">
@@ -126,6 +127,10 @@ export default {
       left: 35%;
       top: 50%;
       z-index: 100;
+
+      .tablet({
+        left: 50%;
+      });
     }
 
     .controls .down-button {
@@ -148,6 +153,10 @@ export default {
       left: 0;
       transition: transform 0.5s ease-in-out;
 
+      .tablet({
+        width: 50%;
+      });
+
       & > div {
         height: 100%;
         width: 100%;
@@ -163,6 +172,10 @@ export default {
         margin-bottom: 10px;
         margin-top: -30px;
         text-align: center;
+
+        .tablet({
+          font-size: 24px;
+        });
       }
     }
 
@@ -173,6 +186,11 @@ export default {
       left: 35%;
       width: 65%;
       transition: transform 0.5s ease-in-out;
+
+      .tablet({
+        width: 50%;
+        left: 50%;
+      });
 
       div {
         background-repeat: no-repeat;
