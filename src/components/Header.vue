@@ -39,6 +39,10 @@ export default {
     position: absolute;
     left: 0;
     width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .wrapper-header-text {
