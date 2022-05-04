@@ -3,13 +3,13 @@
     <img src="../assets/logo.png" @click="scrollUp">
     <div class="spacer"></div>
     <div class="wrapper-header-text">
-      <a href="https://github.com/KonstantinSh21">
+      <a target="_blank" href="https://github.com/KonstantinSh21">
         <font-awesome-icon :icon="['fab', 'github']"/>
       </a>
-      <a href="https://vk.com/shikhov_21">
+      <a target="_blank" href="https://vk.com/shikhov_21">
         <font-awesome-icon :icon="['fab', 'vk']"/>
       </a>
-      <a href="https://www.instagram.com/shikhov_21">
+      <a target="_blank" href="https://www.instagram.com/shikhov_21">
         <font-awesome-icon :icon="['fab', 'instagram']"/>
       </a>
     </div>

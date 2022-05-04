@@ -4,18 +4,16 @@
       <Header @scrollUp="scrollUp"/>
     </div>
     <div style="transform: translateY(0px)" class="main-wrapper">
-      <div class="wrapper">
-        <ScreenFirst
-            @toggleScreen="toggleNextScreen"
-        />
+      <div data-id="0" class="wrapper">
+        <ScreenFirst/>
       </div>
-      <div class="wrapper">
+      <div data-id="1" class="wrapper">
         <Autobiography/>
       </div>
-      <div class="wrapper">
+      <div data-id="2" class="wrapper">
         <MyWork/>
       </div>
-      <div class="wrapper">
+      <div data-id="3" class="wrapper">
         <Slider/>
       </div>
     </div>
@@ -24,6 +22,17 @@
         0{{ pageId }}
       </div>
       <div class="wrapper-counter__item-amount">0{{ amountPages }}</div>
+    </div>
+    <div class="body-wrapper__footer">
+      <div
+          @click="toggleNextScreen('up')"
+          class="body-wrapper__footer-arrow"
+      >
+        <font-awesome-icon :icon="['fa', 'angle-down']"/>
+      </div>
+      <div class="body-wrapper__footer-text">
+        Spin smoothly or push
+      </div>
     </div>
   </div>
 </template>
@@ -41,7 +50,9 @@ export default {
     return {
       pageId: 1,
       amountPages: null,
-      maxEvent: 0
+      maxEvent: 0,
+      isActivePageText: [false, false],
+      isAnimate: false
     }
   },
   components: {
@@ -51,8 +62,13 @@ export default {
     MyWork,
     Slider
   },
+  computed: {},
+  watch: {
+    // pageId() {
+    //   console.log(this.pageId);
+    // }
+  },
   methods: {
-
     scrollUp() {
       for (let i = 0; i <= this.pageId; i++) {
         this.toggleNextScreen('down');
@@ -64,26 +80,34 @@ export default {
       const height = document.documentElement.clientHeight;
       let newValue = 0;
       let firstItem = wrapper.style.transform.indexOf('(');
+      const that = this;
 
-      if (pos === 'up') {
-        newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) - height;
+      if (!this.isAnimate) {
+        this.isAnimate = true;
+        if (pos === 'up') {
+          newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) - height;
 
-        if (lengthList * height <= newValue * -1) {
-          // Уперся вниз
-          return false;
+          if (lengthList * height <= newValue * -1) {
+            // Уперся вниз
+            return false;
+          }
+          this.pageId++
+        } else if (pos === 'down') {
+          newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) + height;
+
+          if (newValue > 0) {
+            //Уперся вверх
+            return false;
+          }
+          this.pageId--
         }
-        this.pageId++
-      } else if (pos === 'down') {
-        newValue = Number(wrapper.style.transform.slice(firstItem + 1, wrapper.style.transform.length - 3)) + height;
 
-        if (newValue > 0) {
-          //Уперся вверх
-          return false;
-        }
-        this.pageId--
+        wrapper.style.transform = "translateY(" + newValue + "px)";
+
+        setTimeout(() => {
+          that.isAnimate = false;
+        }, 2000)
       }
-
-      wrapper.style.transform = "translateY(" + newValue + "px)";
     },
   },
   mounted() {
@@ -204,4 +228,74 @@ export default {
   }
 }
 
+.body-wrapper__footer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateY(-50%);
+  color: #cccccc;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+
+  .tablet({
+    display: none;
+  });
+
+  .body-wrapper__footer-arrow {
+    margin: 0 auto;
+
+    svg {
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      animation: move 2s infinite;
+    }
+
+    @keyframes move {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+  }
+}
+
+.start-position {
+  animation: startText 2s;
+}
+
+.end-position {
+  animation: stopText 1s;
+  transform: translateX(-200px);
+  opacity: 0;
+}
+
+@keyframes startText {
+  0% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes stopText {
+  0% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+}
 </style>

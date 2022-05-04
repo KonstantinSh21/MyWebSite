@@ -1,21 +1,10 @@
 <template>
-  <div class="body-wrapper">
+  <div data-id="1" class="body-wrapper">
     <div class="body-wrapper__item-color">
       <div class="body-wrapper__text">
-        <h1 class="body-wrapper__text-item">
-          Frontend <span>Developer</span> Shikhov Konstantin
+        <h1 class="body-wrapper__text-item animate-text" :class="isStart ? 'start-position': 'end-position'">
+          Front-end <span @click="click">Developer</span> Shikhov Konstantin
         </h1>
-      </div>
-      <div class="body-wrapper__footer">
-        <div
-            @click="toggleScreen"
-            class="body-wrapper__footer-arrow"
-        >
-          <font-awesome-icon :icon="['fa', 'angle-down']"/>
-        </div>
-        <div class="body-wrapper__footer-text">
-          Spin smoothly or push
-        </div>
       </div>
     </div>
   </div>
@@ -24,10 +13,18 @@
 <script>
 export default {
   name: "ScreenFirst",
-  methods: {
-    toggleScreen() {
-      this.$emit('toggleScreen', 'up')
+  data() {
+    return {
+      isStart: false,
     }
+  },
+  methods: {
+    click() {
+      this.isStart = !this.isStart
+    }
+  },
+  mounted() {
+    this.isStart = true;
   }
 }
 </script>
@@ -52,7 +49,6 @@ export default {
   height: 100%;
   width: 100%;
 
-
   .body-wrapper__item-color {
     height: 100%;
     width: 100%;
@@ -63,108 +59,45 @@ export default {
     justify-content: center;
   }
 
-  .body-wrapper__footer {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateY(-50%);
-    color: #cccccc;
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    justify-content: center;
-
-    .tablet({
-      display: none;
-    });
-
-    .body-wrapper__footer-arrow {
-      margin: 0 auto;
-
-      svg {
-        cursor: pointer;
-        width: 50px;
-        height: 50px;
-        animation: move 2s infinite;
-      }
-
-      @keyframes move {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(10px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
-      }
-    }
-
-
-    .body-wrapper__footer-text {
-      text-align: center;
-      width: 100%;
-      margin-top: 8px;
-      font-weight: 300;
-      font-size: 18px;
-    }
-
+  .body-wrapper__footer-text {
+    text-align: center;
+    width: 100%;
+    margin-top: 8px;
+    font-weight: 300;
+    font-size: 18px;
   }
 
-  .body-wrapper__text {
-    margin: 0 200px;
+}
+
+.body-wrapper__text {
+  margin: 0 200px;
+
+  .tablet ({
+    max-width: 600px;
+    margin: 0 auto;
+  });
+
+  .mobile({
+    max-width: 500px;
+  });
+
+  .body-wrapper__text-item {
+    max-width: 1140px;
+    text-align: left;
+    color: #ffffff;
+    font-size: 92px;
+    font-weight: 400;
+    z-index: 10;
+    word-break: keep-all;
 
     .tablet ({
-      max-width: 600px;
-      margin: 0 auto;
+      font-size: 78px;
     });
 
     .mobile({
-      max-width: 500px;
-    });
-
-    .body-wrapper__text-item {
-      max-width: 1140px;
-      text-align: left;
-      color: #ffffff;
-      font-size: 92px;
-      font-weight: 400;
-      z-index: 10;
-      word-break: keep-all;
-
-      .tablet ({
-        font-size: 78px;
-      });
-
-      .mobile({
-        font-size: 54px;
-      })
-
-      //span {
-      //  z-index: 11;
-      //  position: relative;
-      //
-      //  &:hover:before {
-      //    height: 70px;
-      //  }
-      //}
-      //
-      //span:before {
-      //  content: '';
-      //  position: absolute;
-      //  left: 1px;
-      //  bottom: 15px;
-      //  width: 100%;
-      //  z-index: -1;
-      //  height: 5px;
-      //  background: linear-gradient(70.17deg, #4e2dc5 10.49%, #e86e55 83.94%);
-      //  transition: all .3s ease-in-out;
-      //}
-    }
+      font-size: 54px;
+    })
   }
-
-
 }
 
 </style>
